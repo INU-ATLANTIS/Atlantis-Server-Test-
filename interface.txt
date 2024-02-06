@@ -1,0 +1,123 @@
+signIn(로그인)
+
+- request
+{
+    *email : String,
+    *password : String
+}
+
+- response
+
+성공
+
+Http status - 200 (OK)
+{
+    Code: "SU",
+    Message: "Success."
+    token: "jwt...",
+    expiredDate: 123456789
+}
+
+실패
+
+-필수 정보 미 입력
+
+-로그인 실패
+Http Status - 401 (Unauthorized 인증 실패)
+{
+    code: "SF",
+    message: "Sing In Failed."
+}
+
+- 데이터베이스 에러
+Http status - 500 (Internal Server error)
+{
+    code: "DE",
+    message: "Database Error."
+}
+
+========================================
+
+singUp(회원가입)
+
+-request
+{
+    *email: String,
+    *password: String,
+    nickname: String
+}
+
+- response
+
+성공
+
+Http status - 200 (OK)
+{
+    Code: "SU",
+    Message: "Success."
+}
+
+실패
+
+-이메일 중복
+Http Status - 400 (Bad Request)
+{
+    code: "EE",
+    message: "Existed Email."
+}
+
+- 데이터베이스 에러
+Http status - 500 (Internal Server error)
+{
+    code: "DE",
+    message: "Database Error."
+}
+
+========================================
+
+
+weeklyTop(주간 인기 게시물)
+
+- response
+
+성공
+
+Http status - 200 (OK)
+{
+    Code: "SU",
+    Message: "Success."
+    top3List: BoardListItem[]
+}
+
+BoardListItem
+{
+    title: string,
+    content: string,
+    favoriteCount: int,
+    commentCount: int,
+    writeDatetime: string,
+    writerNickname: string
+
+}
+
+실패
+
+========================================
+
+currentList (최신 게시물)
+
+markerDetail (마커 상세 정보)
+
+markerUpdate (마커 수정 기능)
+
+markerDelete (마커 삭제 기능)
+
+putFavoirte (좋아요 기능)
+
+commentList (댓글 리스트)
+
+postComment (댓글 쓰기)
+
+getUser (유저 정보 불러오기)
+
+
