@@ -26,4 +26,5 @@ public class UserEntity {
     private Date createDate;
     private Date updateDate;
     private String nickname;
+    private String role;
 }

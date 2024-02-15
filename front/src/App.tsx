@@ -21,7 +21,11 @@ function App() {
       <InputBox title='이메일' placeholder='이메일 앞부분만 입력해주세요' 
       type='text' value={email} onChange={onEmailChangeHandler}
       buttonTitle='중복 확인' onButtonClick={onEmailButtonClickHandler}
-      message='사용 가능한 이메일 입니다.'/>
+      message='사용 가능한 이메일 입니다.' isErrorMessgae={false}/>
+
+      <div className='primary-button-lg full-width'>회원가입</div>
+
+      <div className='text-link-lg'>로그인</div>
     </>
   );
 }
