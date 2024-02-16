@@ -1,15 +1,18 @@
 package com.atl.map.repository;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.atl.map.entity.UserEntity;
 import java.util.List;
 
-
-
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long>{
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+
+    boolean existsByUserEmail(String UserEmail){
+        return false;
+    };
 
     UserEntity findByUserEmail(String userEmail);
-    
+
 }
