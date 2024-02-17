@@ -1,5 +1,6 @@
 package com.atl.map.controller;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +13,8 @@ import com.atl.map.dto.request.auth.CheckCertificationRequestDto;
 import com.atl.map.dto.response.auth.CheckCertificationResponseDto;
 import com.atl.map.dto.request.auth.EmailCertificationRequestDto;
 import com.atl.map.dto.request.auth.EmailCheckRequestDto;
+import com.atl.map.dto.request.auth.SignUpRequestDto;
+import com.atl.map.dto.response.auth.SignUpResponseDto;
 import com.atl.map.service.AuthService;
 
 import jakarta.validation.Valid;
@@ -45,6 +48,15 @@ public class AuthController {
         @RequestBody @Valid CheckCertificationRequestDto requestBody
     ){
         ResponseEntity<? super CheckCertificationResponseDto> response = authService.checkCertification(requestBody);
+        return response;
+    }
+    
+    @PostMapping("/sign-up")
+    public ResponseEntity<? super SignUpResponseDto> singUp (
+       @RequestBody @Valid SignUpRequestDto requestBody)
+    {
+
+        ResponseEntity<? super SignUpResponseDto> response = authService.signUp(requestBody);
         return response;
     }
     
