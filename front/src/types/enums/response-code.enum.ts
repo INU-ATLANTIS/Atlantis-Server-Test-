@@ -1,16 +1,18 @@
 enum ResponseCode {
 
-    SUCCESS = "SU",
+    SUCCESS = 'SU',
 
-    VALIDATION_FAIL = "VF",
+    VALIDATION_FAIL = 'VF',
     
-    DUPLICATE_EMAIL = "DE",
+    DUPLICATE_EMAIL = 'DE',
 
-    SIGN_IN_FAIL = "SF",
+    SIGN_IN_FAIL = 'SF',
     
-    CERTIFICATION_FAIL = "CF",
+    CERTIFICATION_FAIL = 'CF',
 
-    DATABASE_ERROR = "DBE"
+    MAIL_FAIL = 'MF',
+
+    DATABASE_ERROR = 'DBE'
 }
 
 export default ResponseCode;

@@ -58,7 +58,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             // 사용자 이메일로 사용자 정보를 조회하고, 사용자의 권한(역할)을 확인한다.
-            UserEntity userEntity = userRepository.findByUserEmail(userEmail);
+            UserEntity userEntity = userRepository.findByEmail(userEmail);
             String role = userEntity.getRole(); // 예: ROLE_USER, ROLE_ADMIN
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority(role));

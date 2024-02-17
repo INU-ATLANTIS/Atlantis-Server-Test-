@@ -8,4 +8,7 @@ import com.atl.map.entity.CertificationEntity;
 @Repository
 public interface CertificationRepository extends JpaRepository<CertificationEntity, Long> {
 
+    CertificationEntity findByEmail(String email);
+
+    
 }

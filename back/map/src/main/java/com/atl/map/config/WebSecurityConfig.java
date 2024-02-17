@@ -2,10 +2,13 @@ package com.atl.map.config;
 
 import java.io.IOException;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HttpBasicConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
@@ -21,6 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
+@Configurable
 @Configuration // Spring의 구성 클래스를 선언합니다.
 @EnableWebSecurity // Spring Security를 활성화합니다.
 @RequiredArgsConstructor // Lombok을 사용하여 final 필드를 인자로 하는 생성자를 자동으로 생성합니다.
@@ -33,8 +37,8 @@ public class WebSecurityConfig {
         httpSecurity
                 .cors(cors -> cors
                         .configurationSource(corsConfigurationSource())) // CORS 설정을 정의합니다.
-                .csrf(CsrfConfigurer -> CsrfConfigurer.disable()) // CSRF 보호를 비활성화합니다.
-                .httpBasic(HttpBasicConfigurer -> HttpBasicConfigurer.disable()) // 기본 HTTP 인증을 비활성화합니다.
+                .csrf(CsrfConfigurer::disable) // CSRF 보호를 비활성화합니다.
+                .httpBasic(HttpBasicConfigurer::disable) // 기본 HTTP 인증을 비활성화합니다.
                 .sessionManagement(sessionManagement -> sessionManagement
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션을 STATELESS로 설정하여 세션을 사용하지 않게 합니다.
                 .authorizeHttpRequests(request -> request
@@ -59,7 +63,7 @@ public class WebSecurityConfig {
         corsConfiguration.addAllowedHeader("*"); // 모든 헤더를 허용합니다.
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", corsConfiguration); // 모든 경로에 대해 CORS 설정을 적용합니다.
+        source.registerCorsConfiguration("/api/v1/**", corsConfiguration); // 모든 경로에 대해 CORS 설정을 적용합니다.
 
         return source;
     }

@@ -11,8 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter //멤버들의 게터 메소드 생성
-@NoArgsConstructor  // 매개변수 없는 생성자
+@Getter 
+@NoArgsConstructor  
 @AllArgsConstructor 
 @Entity(name="user")
 @Table(name="user")
@@ -20,7 +20,9 @@ public class UserEntity {
 
     @Id
     @GeneratedValue
-    private Long uesrId;
+    @Column(name = "userId")
+    private Long userId;
+    @Column(name = "email") // 데이터베이스의 실제 컬럼명 지정
     private String email;
     private String password;
     private Date createDate;
