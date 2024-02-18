@@ -9,15 +9,18 @@ import com.atl.map.common.CertificationNumber;
 import com.atl.map.dto.request.auth.CheckCertificationRequestDto;
 import com.atl.map.dto.request.auth.EmailCertificationRequestDto;
 import com.atl.map.dto.request.auth.EmailCheckRequestDto;
+import com.atl.map.dto.request.auth.SignInRequestDto;
 import com.atl.map.dto.request.auth.SignUpRequestDto;
 import com.atl.map.dto.response.ResponseDto;
 import com.atl.map.dto.response.auth.CheckCertificationResponseDto;
 import com.atl.map.dto.response.auth.EmailCertificationResponseDto;
 import com.atl.map.dto.response.auth.EmailCheckResponseDto;
+import com.atl.map.dto.response.auth.SignInResponseDto;
 import com.atl.map.dto.response.auth.SignUpResponseDto;
 import com.atl.map.entity.CertificationEntity;
 import com.atl.map.entity.UserEntity;
 import com.atl.map.provider.EmailProvider;
+import com.atl.map.provider.JwtProvider;
 import com.atl.map.repository.CertificationRepository;
 import com.atl.map.repository.UserRepository;
 import com.atl.map.service.AuthService;
@@ -32,6 +35,7 @@ public class AuthServiceImplement implements AuthService {
     private final UserRepository userRepository;
     private final CertificationRepository certificationRepository;
     private final EmailProvider emailProvider;
+    private final JwtProvider jwtProvider;
 
     //의존성 주입 아님
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -137,6 +141,32 @@ public class AuthServiceImplement implements AuthService {
         }
 
         return SignUpResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
+        
+        String token = null;
+
+        try{
+
+            String userEmail = dto.getEmail();
+            UserEntity userEntity = userRepository.findByEmail(userEmail);
+            if(userEntity == null) return SignInResponseDto.signInFail();
+
+            String password = dto.getPassword();
+            String encodedPassword = userEntity.getPassword();
+            boolean isMatched = passwordEncoder.matches(password, encodedPassword);
+            if(!isMatched) return SignInResponseDto.signInFail();
+
+            token = jwtProvider.create(userEmail);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return SignInResponseDto.success(token);
     }
 
 }

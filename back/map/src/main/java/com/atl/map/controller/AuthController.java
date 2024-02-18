@@ -13,6 +13,8 @@ import com.atl.map.dto.request.auth.CheckCertificationRequestDto;
 import com.atl.map.dto.response.auth.CheckCertificationResponseDto;
 import com.atl.map.dto.request.auth.EmailCertificationRequestDto;
 import com.atl.map.dto.request.auth.EmailCheckRequestDto;
+import com.atl.map.dto.request.auth.SignInRequestDto;
+import com.atl.map.dto.response.auth.SignInResponseDto;
 import com.atl.map.dto.request.auth.SignUpRequestDto;
 import com.atl.map.dto.response.auth.SignUpResponseDto;
 import com.atl.map.service.AuthService;
@@ -52,11 +54,18 @@ public class AuthController {
     }
     
     @PostMapping("/sign-up")
-    public ResponseEntity<? super SignUpResponseDto> singUp (
+    public ResponseEntity<? super SignUpResponseDto> signUp (
        @RequestBody @Valid SignUpRequestDto requestBody)
     {
-
         ResponseEntity<? super SignUpResponseDto> response = authService.signUp(requestBody);
+        return response;
+    }
+
+    @PostMapping("/sign-in")
+    public ResponseEntity<? super SignInResponseDto> signIn (
+        @RequestBody @Valid SignInRequestDto requestBody)
+    {
+        ResponseEntity<? super SignInResponseDto> response = authService.signIn(requestBody);
         return response;
     }
     
