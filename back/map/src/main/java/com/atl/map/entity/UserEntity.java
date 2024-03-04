@@ -34,6 +34,7 @@ public class UserEntity {
     private LocalDateTime updateDate;
     private String nickname;
     private String role;
+    private String profileImage;
 
     public UserEntity(SignUpRequestDto dto) {
 
