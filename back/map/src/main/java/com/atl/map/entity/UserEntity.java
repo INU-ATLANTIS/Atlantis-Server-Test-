@@ -47,4 +47,16 @@ public class UserEntity {
         LocalDateTime now = LocalDateTime.now();
         this.createDate = now; // 엔티티 생성 시 현재 시간으로 초기화
     }
+
+    public void setNickname(String nickname){
+        this.nickname = nickname;
+        LocalDateTime now = LocalDateTime.now();
+        this.updateDate = now; 
+    }
+
+    public void setProfileImage(String profileimage){
+        this.profileImage = profileimage;
+        LocalDateTime now = LocalDateTime.now();
+        this.updateDate = now; 
+    }
 }

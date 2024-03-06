@@ -8,6 +8,7 @@ public interface ResponseCode {
     // HTTP Status 400
     String VALIDATION_FAIL = "VF";
     String DUPLICATE_EMAIL = "DE";
+    String DUPLICATE_NICKNAME = "DN";
     String NOT_EXISTED_USER = "NU";
     String NOT_EXISTED_POST = "NP";
 
