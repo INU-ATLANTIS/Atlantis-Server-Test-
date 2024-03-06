@@ -2,7 +2,6 @@ package com.atl.map.dto.response.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.atl.map.common.ResponseCode;
 import com.atl.map.common.ResponseMessage;
@@ -30,7 +29,7 @@ public class GetSignInUserResponseDto extends ResponseDto{
         return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 
-    public static ResponseEntity<ResponseDto> notExostUser(){
+    public static ResponseEntity<ResponseDto> noExistUser(){
         ResponseDto responseBody = new ResponseDto(ResponseCode.NOT_EXISTED_USER, ResponseMessage.NOT_EXISTED_USER);
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }

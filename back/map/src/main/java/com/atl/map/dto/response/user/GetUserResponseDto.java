@@ -1,6 +1,5 @@
 package com.atl.map.dto.response.user;
 
-import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -10,7 +9,6 @@ import com.atl.map.dto.response.ResponseDto;
 import com.atl.map.entity.UserEntity;
 
 import lombok.Getter;
-import net.bytebuddy.asm.Advice.Return;
 
 @Getter
 public class GetUserResponseDto extends ResponseDto{

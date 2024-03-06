@@ -1,6 +1,5 @@
 package com.atl.map.entity;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 
 import com.atl.map.dto.request.auth.SignUpRequestDto;
