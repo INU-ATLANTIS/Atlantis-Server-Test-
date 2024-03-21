@@ -16,6 +16,6 @@ public class CreatePostRequestDto {
     private String title;
     @NotBlank
     private String content;
-    @NotNull
     private List<String> imageList; 
+    private int buildingId;
 }

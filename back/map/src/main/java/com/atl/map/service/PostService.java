@@ -7,5 +7,5 @@ import com.atl.map.dto.request.post.CreatePostRequestDto;
 
 public interface PostService {
 
-    ResponseEntity<? super CreatePostResponseDto> createPost(CreatePostRequestDto dto, int userId);
+    ResponseEntity<? super CreatePostResponseDto> createPost(CreatePostRequestDto dto, String email);
 }

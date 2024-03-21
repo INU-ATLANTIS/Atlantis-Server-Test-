@@ -32,7 +32,7 @@ public class PostEntity {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
     private int userId;
-    private int buildingId;
+    private Integer buildingId;
 
     public PostEntity(CreatePostRequestDto dto, int Id) {
         this.title = dto.getTitle();
@@ -41,5 +41,6 @@ public class PostEntity {
         this.commentCount = 0;
         this.likeCount = 0;
         this.userId = Id;
+        this.buildingId = (dto.getBuildingId() != 0) ? dto.getBuildingId() : null; // 조건부로 null 할당
     }
 }
