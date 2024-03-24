@@ -8,14 +8,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.atl.map.dto.request.post.CreatePostRequestDto;
+import com.atl.map.dto.request.post.PostCommentRequestDto;
 import com.atl.map.dto.response.ResponseDto;
 import com.atl.map.dto.response.post.CreatePostResponseDto;
 import com.atl.map.dto.response.post.GetPostResponseDto;
+import com.atl.map.dto.response.post.PostCommentResponseDto;
 import com.atl.map.dto.response.post.PutFavoriteResponseDto;
+import com.atl.map.entity.CommentEntity;
 import com.atl.map.entity.FavoriteEntity;
 import com.atl.map.entity.ImageEntity;
 import com.atl.map.entity.PostEntity;
 import com.atl.map.entity.UserEntity;
+import com.atl.map.repository.CommentRepository;
 import com.atl.map.repository.FavoriteRepository;
 import com.atl.map.repository.ImageRepository;
 import com.atl.map.repository.PostRepository;
@@ -34,6 +38,7 @@ public class PostServiceImplement implements PostService {
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
     private final FavoriteRepository favoriteRepository;
+    private final CommentRepository commentRepository;
     
 
     @Transactional
@@ -120,6 +125,30 @@ public class PostServiceImplement implements PostService {
         }
 
         return PutFavoriteResponseDto.success();
+    }
+
+    @Override
+    public ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer postId, String email) {
+    
+        try{
+
+            PostEntity postEntity = postRepository.findByPostId(postId);
+            if(postEntity == null) return PostCommentResponseDto.notExistPost();
+
+            boolean existedEmail = userRepository.existsByEmail(email);
+            if(!existedEmail) return PostCommentResponseDto.notExistUser();
+
+            CommentEntity commentEntity = new CommentEntity(dto, postId, userRepository.findByEmail(email).getUserId());
+            commentRepository.save(commentEntity);
+            postEntity.increaseCommentCount();
+            postRepository.save(postEntity);
+
+        }catch(Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PostCommentResponseDto.success();
     }
     
 }

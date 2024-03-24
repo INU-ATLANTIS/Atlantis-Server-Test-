@@ -1,5 +1,6 @@
-package com.atl.map.dto.response.post;
+package com.atl.map.dto.request.post;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,5 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PostCommentRequestDto {
     
-    private String cooment;
+    @NotBlank
+    private String content;
 }

@@ -51,4 +51,14 @@ public class PostEntity {
     public void decreaseLikeCount(){
         this.likeCount--;
     }
+
+    public void increaseCommentCount(){
+        this.commentCount++;
+    }
+
+    public void decreaseCommentCount(){
+        this.commentCount--;
+    }
+
+    
 }

@@ -48,4 +48,14 @@ public class PostController {
         ResponseEntity<? super PutFavoriteResponseDto> response = postService.putFavorite(postId, email);
         return response;
     }
+
+    @PostMapping("/{postid}/comment")
+    public ResponseEntity<? super PostCommentResponseDto> postComment(
+        @RequestBody @Valid PostCommentRequestDto requestBody, 
+        @PathVariable("postid") Integer postId,
+        @AuthenticationPrincipal String email
+    ){
+        ResponseEntity<? super PostCommentResponseDto> response = postService.postComment(requestBody, postId, email);
+        return response;
+    }
 }
