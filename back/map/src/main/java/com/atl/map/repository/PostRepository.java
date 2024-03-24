@@ -7,8 +7,12 @@ import org.springframework.stereotype.Repository;
 import com.atl.map.entity.PostEntity;
 import com.atl.map.repository.resultSet.GetPostResultSet;
 
+
 @Repository
 public interface PostRepository extends JpaRepository<PostEntity, Integer>{
+
+
+    PostEntity findByPostId(Integer postId);
 
     @Query(value = "SELECT p.postId, p.title, p.content, " +
                    "IFNULL(p.updateDate, p.createDate) AS writeDatetime, " +

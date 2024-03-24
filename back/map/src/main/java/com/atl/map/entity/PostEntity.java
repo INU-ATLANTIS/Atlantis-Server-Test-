@@ -43,4 +43,12 @@ public class PostEntity {
         this.userId = Id;
         this.buildingId = (dto.getBuildingId() != 0) ? dto.getBuildingId() : null; // 조건부로 null 할당
     }
+
+    public void increaseLikeCount(){
+        this.likeCount++;
+    }
+
+    public void decreaseLikeCount(){
+        this.likeCount--;
+    }
 }

@@ -11,9 +11,12 @@ import com.atl.map.dto.request.post.CreatePostRequestDto;
 import com.atl.map.dto.response.ResponseDto;
 import com.atl.map.dto.response.post.CreatePostResponseDto;
 import com.atl.map.dto.response.post.GetPostResponseDto;
+import com.atl.map.dto.response.post.PutFavoriteResponseDto;
+import com.atl.map.entity.FavoriteEntity;
 import com.atl.map.entity.ImageEntity;
 import com.atl.map.entity.PostEntity;
 import com.atl.map.entity.UserEntity;
+import com.atl.map.repository.FavoriteRepository;
 import com.atl.map.repository.ImageRepository;
 import com.atl.map.repository.PostRepository;
 import com.atl.map.repository.UserRepository;
@@ -30,6 +33,7 @@ public class PostServiceImplement implements PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
+    private final FavoriteRepository favoriteRepository;
     
 
     @Transactional
@@ -83,6 +87,39 @@ public class PostServiceImplement implements PostService {
         }
 
         return GetPostResponseDto.success(resultSet, imageEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer postId, String email) {
+    
+        try{
+
+            boolean existedEmail =userRepository.existsByEmail(email);
+            if(!existedEmail) return PutFavoriteResponseDto.notExistUser();
+
+            PostEntity postEntity = postRepository.findByPostId(postId);
+            if(postEntity == null) return PutFavoriteResponseDto.noExistPost();
+
+            Integer userId = userRepository.findByEmail(email).getUserId();
+            FavoriteEntity favoriteEntity = favoriteRepository.findByPostIdAndUserId(postId, userId);
+            if(favoriteEntity==null){
+                favoriteEntity = new FavoriteEntity(userId, postId);
+                favoriteRepository.save(favoriteEntity);
+                postEntity.increaseLikeCount();
+            }else{
+                favoriteRepository.delete(favoriteEntity);
+                postEntity.decreaseLikeCount();
+            }
+
+            postRepository.save(postEntity);
+
+
+        }catch(Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return PutFavoriteResponseDto.success();
     }
     
 }
