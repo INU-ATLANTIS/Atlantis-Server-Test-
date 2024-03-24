@@ -9,5 +9,11 @@ public interface PostService {
     ResponseEntity<? super GetPostResponseDto> getPost(Integer postId);
     ResponseEntity<? super CreatePostResponseDto> createPost(CreatePostRequestDto dto, String email);
     ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer postId, String email);
+    ResponseEntity<? super PatchPostResponseDto> patchPost(PatchPostRequestDto dto, Integer postId, String email);
+    ResponseEntity<? super DeletePostResponseDto> deletePost(Integer postId, String email);
+
+    ResponseEntity<? super GetLatestPostResponseDto> getLatestPostList();
+
+
     ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer postId, String email);
 }

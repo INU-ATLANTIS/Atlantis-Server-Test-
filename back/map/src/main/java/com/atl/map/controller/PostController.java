@@ -2,7 +2,9 @@ package com.atl.map.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -49,6 +51,25 @@ public class PostController {
         return response;
     }
 
+    @PatchMapping("/{postid}")
+    public ResponseEntity<? super PatchPostResponseDto> patchPost(
+        @RequestBody @Valid PatchPostRequestDto dto,
+        @PathVariable("postid") Integer postId,
+        @AuthenticationPrincipal String email
+    ){
+        ResponseEntity<? super PatchPostResponseDto> response = postService.patchPost(dto, postId, email);
+        return response;
+    }
+
+    @DeleteMapping("/{postid}")
+    public ResponseEntity<? super DeletePostResponseDto> deletePost( 
+        @PathVariable("postid") Integer postId,
+        @AuthenticationPrincipal String email
+    ){
+        ResponseEntity<? super DeletePostResponseDto> response = postService.deletePost(postId, email);
+        return response;
+    }
+
     @PostMapping("/{postid}/comment")
     public ResponseEntity<? super PostCommentResponseDto> postComment(
         @RequestBody @Valid PostCommentRequestDto requestBody, 
@@ -58,4 +79,12 @@ public class PostController {
         ResponseEntity<? super PostCommentResponseDto> response = postService.postComment(requestBody, postId, email);
         return response;
     }
+
+    @GetMapping("/latest-list")
+    public ResponseEntity<? super GetLatestPostResponseDto> getLatestPostList(){
+        ResponseEntity<? super GetLatestPostResponseDto> response = postService.getLatestPostList();
+        return response;
+    }
+
+
 }

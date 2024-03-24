@@ -3,6 +3,7 @@ package com.atl.map.entity;
 import java.time.LocalDateTime;
 
 import com.atl.map.dto.request.post.CreatePostRequestDto;
+import com.atl.map.dto.request.post.PatchPostRequestDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -58,6 +59,12 @@ public class PostEntity {
 
     public void decreaseCommentCount(){
         this.commentCount--;
+    }
+
+    public void patchPost(PatchPostRequestDto dto){
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.updateDate = LocalDateTime.now();
     }
 
     
