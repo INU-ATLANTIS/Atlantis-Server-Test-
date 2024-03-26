@@ -86,5 +86,19 @@ public class PostController {
         return response;
     }
 
+    @GetMapping("/top")
+    public ResponseEntity<? super GetTopPostListResponseDto> getTopPostList(){
+        ResponseEntity<? super GetTopPostListResponseDto> response = postService.getTopPostList();
+        return response;
+    }
+
+    @GetMapping("/search-list/{searchword}")
+    public ResponseEntity<? super GetSearchPostListResponseDto> postComment(
+        @PathVariable("searchword") String searchWord
+    ){
+        ResponseEntity<? super GetSearchPostListResponseDto> response = postService.getSearchPostList(searchWord);
+        return response;
+    }
+
 
 }

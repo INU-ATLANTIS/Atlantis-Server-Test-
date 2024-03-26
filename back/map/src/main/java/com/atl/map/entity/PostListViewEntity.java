@@ -1,5 +1,7 @@
 package com.atl.map.entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,7 +23,7 @@ public class PostListViewEntity {
     private String content;
     private int likeCount;
     private int commentCount;
-    private String writeDatetime; 
+    private LocalDateTime writeDatetime; 
     private String writerNickname;
     private String writerProfileImage;
     private String postTitleImage; 

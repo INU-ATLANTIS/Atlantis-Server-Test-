@@ -13,6 +13,8 @@ public interface PostService {
     ResponseEntity<? super DeletePostResponseDto> deletePost(Integer postId, String email);
 
     ResponseEntity<? super GetLatestPostResponseDto> getLatestPostList();
+    ResponseEntity<? super GetTopPostListResponseDto> getTopPostList();
+    ResponseEntity<? super GetSearchPostListResponseDto> getSearchPostList(String searchWord);
 
 
     ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer postId, String email);

@@ -1,6 +1,11 @@
 package com.atl.map.service.implement;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -15,6 +20,8 @@ import com.atl.map.dto.response.post.CreatePostResponseDto;
 import com.atl.map.dto.response.post.DeletePostResponseDto;
 import com.atl.map.dto.response.post.GetLatestPostResponseDto;
 import com.atl.map.dto.response.post.GetPostResponseDto;
+import com.atl.map.dto.response.post.GetSearchPostListResponseDto;
+import com.atl.map.dto.response.post.GetTopPostListResponseDto;
 import com.atl.map.dto.response.post.PatchPostResponseDto;
 import com.atl.map.dto.response.post.PostCommentResponseDto;
 import com.atl.map.dto.response.post.PutFavoriteResponseDto;
@@ -232,6 +239,39 @@ public class PostServiceImplement implements PostService {
             return ResponseDto.databaseError();
         }
         return GetLatestPostResponseDto.success(postListViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetTopPostListResponseDto> getTopPostList() {
+    
+        List<PostListViewEntity> postListViewEntities = new ArrayList<>();
+
+        try{
+
+            LocalDateTime beforeWeek = LocalDateTime.now().minusWeeks(1);
+            postListViewEntities = postListViewRepository.findTop10ByWriteDatetimeGreaterThanOrderByLikeCountDescCommentCountDesc(beforeWeek);
+        
+        }catch(Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetTopPostListResponseDto.success(postListViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetSearchPostListResponseDto> getSearchPostList(String searchWord) {
+    
+        List<PostListViewEntity> postListViewEntities = new ArrayList<>();
+        try{
+            postListViewEntities = postListViewRepository.findByTitleContainsOrContentContainsOrderByWriteDatetimeDesc(searchWord, searchWord);
+
+        }catch(Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        
+        return GetSearchPostListResponseDto.success(postListViewEntities);
     }
     
 }
