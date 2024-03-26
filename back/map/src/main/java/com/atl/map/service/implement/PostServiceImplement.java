@@ -18,6 +18,7 @@ import com.atl.map.dto.request.post.PostCommentRequestDto;
 import com.atl.map.dto.response.ResponseDto;
 import com.atl.map.dto.response.post.CreatePostResponseDto;
 import com.atl.map.dto.response.post.DeletePostResponseDto;
+import com.atl.map.dto.response.post.GetCommentListResponseDto;
 import com.atl.map.dto.response.post.GetLatestPostResponseDto;
 import com.atl.map.dto.response.post.GetPostResponseDto;
 import com.atl.map.dto.response.post.GetSearchPostListResponseDto;
@@ -37,6 +38,7 @@ import com.atl.map.repository.ImageRepository;
 import com.atl.map.repository.PostListViewRepository;
 import com.atl.map.repository.PostRepository;
 import com.atl.map.repository.UserRepository;
+import com.atl.map.repository.resultSet.GetCommentListResultSet;
 import com.atl.map.repository.resultSet.GetPostResultSet;
 import com.atl.map.service.PostService;
 
@@ -272,6 +274,25 @@ public class PostServiceImplement implements PostService {
         }
         
         return GetSearchPostListResponseDto.success(postListViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer postId) {
+    
+        List<GetCommentListResultSet> resultSets = new ArrayList<>();
+        try{
+
+            boolean existedPost = postRepository.existsById(postId);
+            if(!existedPost) return GetCommentListResponseDto.notExistPost();
+
+            resultSets = commentRepository.getCommentList(postId);
+
+        }catch(Exception exception){
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+
+        return GetCommentListResponseDto.success(resultSets);
     }
     
 }

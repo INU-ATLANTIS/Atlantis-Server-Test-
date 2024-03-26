@@ -18,4 +18,6 @@ public interface PostService {
 
 
     ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer postId, String email);
+    ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer postId);
+
 }

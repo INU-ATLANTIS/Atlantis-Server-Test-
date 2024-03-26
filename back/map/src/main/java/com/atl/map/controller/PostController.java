@@ -101,4 +101,11 @@ public class PostController {
     }
 
 
+    @GetMapping("/{postid}/comment-list")
+    public ResponseEntity<? super GetCommentListResponseDto> postComment(
+        @PathVariable("postid") Integer postId
+    ){
+        ResponseEntity<? super GetCommentListResponseDto> response = postService.getCommentList(postId);
+        return response;
+    }
 }
